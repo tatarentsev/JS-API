@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .menu {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+            background-color: #252121;
+        }
+
+        .navigation__element {
+            color: white;
+            padding: 10px;
+        }
+
+        .active {
+            background-color: red;
+        }
+
+        .modal {
+            /* display: none; */
+            opacity: 0%;
+            gap: 1rem;
+            transition: all .8s ease;
+        }
+
+        .close__btn {
+            background-color: rgb(35, 90, 209);
+            outline: none;
+            border: 0;
+            padding: 5px;
+            color: white;
+        }
+
+        #buy {
+            background-color: rgb(35, 90, 209);
+            outline: none;
+            border: 0;
+            padding: 5px;
+            color: white;
+        }
+
+        .questions__box button {
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        .que {
+            display: grid;
+            gap: 0.5em;
+        }
+
+        .radio {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <!-- Example #1 -->
+    <!-- <ul class="menu"> 
+        <li class="navigation__element">Главная</li>
+        <li class="navigation__element">О нас</li>
+        <li class="navigation__element">Услуги</li>
+        <li class="navigation__element">Контакты</li>
+    </ul> -->
+
+    <!-- Example #2 -->
+    <!-- <button class="btn">Открыть модальное окно</button>
+
+    <div class="modal">
+        <h1>Модальное окно</h1>
+        <p>Нажмите кнопку "Закрыть", чтобы закрыть окно.</p>
+        <button class="close__btn">Закрыть</button>
+    </div> -->
+
+    <!-- Example #3 -->
+    <!-- <button id="buy">Купить</button> -->
+
+    <!-- Example #4 -->
+    <h1>Опрос</h1>
+    <div class="questions__box">
+        <div class="que">
+            <p>Вопрос 1: Какая марка машины наилучшая?</p>
+            <div class="radio">
+                <input type="radio" id="radio1" name="que">
+                <label for="radio1">Audi</label>
+            </div>
+            <div class="radio">
+                <input type="radio" id="radio2" name="que">
+                <label for="radio2">Mercedes</label>
+            </div>
+            <div class="radio">
+                <input type="radio" id="radio3" name="que">
+                <label for="radio3">Bmw</label>
+            </div>
+        </div>
+
+        <div class="que">
+            <p>Вопрос 2: Какой цвет вам больше всего нравится?</p>
+            <div class="radio">
+                <input type="radio" id="radio4" name="que2" class="que2">
+                <label for="radio4">Синий</label>
+            </div>
+            <div class="radio">
+                <input type="radio" id="radio5" name="que2" class="que2">
+                <label id="label__que2" for="radio5">Желтый</label>
+            </div>
+            <div class="radio">
+                <input type="radio" id="radio6" name="que2" class="que2">
+                <label for="radio6">Красный</label>
+            </div>
+        </div>
+        <button id="question__btn">Завершить опрос</button> <br>
+    </div>
+
+    <script>
+        // Example #1
+        // const menuEl = document.querySelector('.menu');
+
+        // menuEl.addEventListener('click', function (e) {
+        //     if(e.target.classList.contains('navigation__element')) {
+        //         document.querySelectorAll('.navigation__element').forEach(element => {
+        //             element.classList.remove('active');
+        //             e.target.classList.add('active');
+        //         });
+        //     }
+        // });   
+        
+        // Example #2 
+        // const modalButton = document.querySelector('.btn');
+        // const modalWindow = document.querySelector('.modal');
+        // const modalCloseWindow = document.querySelector('.close__btn');
+        // modalButton.style.transition = 'all .8s ease';
+        // modalWindow.style.transition = 'all .8s ease';
+
+        // modalButton.addEventListener('click', function (e) {
+        //     // modalWindow.style.display = 'grid';
+        //     modalWindow.style.opacity = "100%";
+        //     modalWindow.style.display = "grid";
+        //     modalWindow.style.backgroundColor = '#F0F0F0';
+        //     modalWindow.style.justifyContent = 'center';
+
+        //     modalCloseWindow.addEventListener('click', function (e) {
+        //         // modalWindow.style.display = 'none';
+        //         modalWindow.style.opacity = '0%';
+        //     });
+            
+        // });
+
+        // Example #3
+        // buy.addEventListener('click', function (e) {
+        //     const originalText = buy.textContent;
+        //     if (e.isTrusted) {
+        //         buy.textContent = 'Товар добавлен в корзину';
+        //         setTimeout(() => {
+        //             this.textContent = originalText;
+        //         }, 2000);
+        //     }
+        // });
+
+        // Example #4
+        const queBoxEl = document.querySelector('.questions__box');
+        let que1;
+        let que2;
+        question__btn.addEventListener('click', function (e) {
+            document.querySelectorAll('input[name="que"]')
+                .forEach(element => (element.checked) ? que1 = element.nextElementSibling.textContent : false);
+            document.querySelectorAll('input[name="que2"]')
+                .forEach(element => (element.checked) ? que2 = element.nextElementSibling.textContent : false);
+
+            if (que1 !== undefined & que2 !== undefined) {
+                queBoxEl.append(document.createElement('p').textContent = "Результаты:");
+                queBoxEl.append(document.createElement('br'));
+                queBoxEl.append(`Вопрос 1: ${que1}`);
+                queBoxEl.append(document.createElement('br'));
+                queBoxEl.append(`Вопрос 2: ${que2}`);
+            } else {
+                e.preventDefault();
+                alert('Вы должны выбрать хотябы один вариант ответа');
+            }
+        });
+    </script>
+</body>
+</html>
