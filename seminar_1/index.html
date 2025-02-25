@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .elements {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+        }
+
+        .box {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            background-color: rgb(22, 164, 246);
+        }
+
+        .box__number {
+            position: absolute;
+            top: -15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Example #1 -->
+    <!-- <p>Resize the browser window to fire the <code>resize</code> event.</p>
+    <p>Window height: <span id="height"></span></p>
+    <p>Window width: <span id="width"></span></p> -->
+
+    <!-- Example #2 -->
+    <button class="add_element">Добавить элемент</button>
+    <button class="del_element">Удалить элемент</button>
+    <button class="clon_element">Клонировать элемент</button>
+
+    <div class="elements">
+        <div class="box">
+            <p class="box__number">1</p>
+        </div>
+        <div class="box">
+            <p class="box__number">2</p>
+        </div>
+        <div class="box">
+            <p class="box__number">3</p>
+        </div>
+    </div>
+
+    <script>
+        // Example #1 
+        // const heightOutput = document.querySelector("#height");
+        // const widthOutput = document.querySelector("#width");
+
+        // function updateSize() {
+        //     heightOutput.textContent = window.innerHeight;
+        //     widthOutput.textContent = window.innerWidth;
+        // }
+
+        // updateSize();
+        // window.addEventListener("resize", updateSize);
+        
+        // window.addEventListener('beforeunload', function (e) {
+        //     e.preventDefault();
+        //     e.returnValue;
+        // });
+
+        // Example #2
+        const addElementButton = document.querySelector('.add_element');
+        const delElementButton = document.querySelector('.del_element');
+        const clonElementButton = document.querySelector('.clon_element');
+
+        const elementsBox = document.querySelector('.elements');
+        let count = elementsBox.lastElementChild.textContent;
+
+        addElementButton.addEventListener('click', function (e) {
+            elementsBox.insertAdjacentHTML("beforeend", `
+                <div class="box">
+                    <p class="box__number">${++count}</p>
+                </div>
+            `);
+
+        });
+
+        delElementButton.addEventListener('click', function (e) {
+            if (count === 3) {
+                e.preventDefault();
+            } else {
+                elementsBox.removeChild(elementsBox.lastElementChild);
+                --count;
+            }
+        });
+
+        clonElementButton.addEventListener('click', function (e) {
+            const clonElBox = elementsBox.lastElementChild.cloneNode(true);
+            elementsBox.lastElementChild.after(clonElBox);
+        });
+    </script>
+</body>
+</html>
