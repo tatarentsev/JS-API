@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 600px;
+            height: 400px;
+            position: relative;
+        }
+
+        .image {
+            width: 100%;
+            height: 100%;
+        }
+
+        .left {
+            position: absolute;
+            top: 190px;
+            left: 10px;
+            width: 30px;
+            height: 30px;
+        }
+
+        .right {
+            position: absolute;
+            top: 190px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+        }
+
+        .box__navigation {
+            position: absolute;
+            bottom: 10px;
+            left: 40%;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .navigation {
+            border-radius: 100%;
+            width: 15px;
+            height: 15px;
+            background-color: transparent;
+            border: 2px solid white;
+        }
+
+        .navigation:hover {
+            background-color: white;
+            transition: .5s ease;
+        }
+
+        .navigation:active {
+            background-color: white;
+            transition: .5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <img class="image" src="image1.jpg" alt="">
+        <img class="image" src="image2.jpg" alt="">
+        <img class="image" src="image3.jpg" alt="">
+        <img class="image" src="image4.jpg" alt="">
+
+        <img class="left" src="left.png" alt="">
+        <img class="right" src="rigth.png" alt="">
+    </div>
+        
+    <script>
+        const image = document.querySelectorAll('.image');
+        const imagesBox = document.querySelector('.box');
+        const leftButton = document.querySelector('.left');
+        const rightButton = document.querySelector('.right');
+        let count = 0;
+
+        const elButtonNavigation = document.createElement('div');
+        elButtonNavigation.classList.add('box__navigation');
+        imagesBox.append(elButtonNavigation);
+
+        for (let i = 0; i < image.length; i++) {
+            const elButton = document.createElement('button');
+            elButton.classList.add('navigation');
+            elButton.setAttribute('data-id', i);
+            elButtonNavigation.append(elButton);
+        }
+
+        const buttonNav = document.querySelectorAll('.navigation');
+
+        image.forEach(element => {
+            element.style.display = 'none';
+        }); 
+        image[count].style.display = 'block';
+        buttonNav[count].style.backgroundColor = 'white'; 
+
+        rightButton.addEventListener('click', function (e) {
+            image.forEach(element => {
+                element.style.display = 'none';
+            });
+
+            count++;
+            console.log(`${count} === ${image.length-1}`);
+            if (count === image.length) {
+                count = 0;
+            } 
+            let temp = image[count];
+            temp.style.display = 'block';
+
+            
+            for (let i = 0; i < buttonNav.length; i++) {
+                if (count === i) {
+                    buttonNav[i].style.backgroundColor = "white";
+                    for (let j = 0; j != i; j++) {
+                        console.log(j);
+                        buttonNav[j].style.backgroundColor = "transparent";
+                    }
+                }
+                else if (count === 0) {
+                    elButtonNavigation.lastElementChild.style.backgroundColor = "transparent";
+                }
+            }
+        });
+
+        leftButton.addEventListener('click', function (e) { 
+            image.forEach(element => {
+                element.style.display = 'none';
+            });
+
+            count--;
+            if (count < 0) {
+                count = image.length-1;
+            }
+            let temp = image[count];
+            temp.style.display = 'block';
+
+            for (let i = buttonNav.length; i >= 0; i--) { // 3 2 1 0
+                if (count === i) { // 3 2 1 0
+                    buttonNav[i].style.backgroundColor = "white";
+                    for (let j = buttonNav.length - 1; j != i; j--) {
+                        buttonNav[j].style.backgroundColor = "transparent";
+                    }
+                }
+                else if (count != 0) {
+                    elButtonNavigation.firstElementChild.style.backgroundColor = "transparent";
+                } else if (count === 0) {
+                    elButtonNavigation.lastElementChild.style.backgroundColor = "transparent";
+                }
+            }
+        });
+         
+        buttonNav.forEach(element => {
+            element.addEventListener('click', function (e) {
+                const target = e.target;
+                console.log(target.dataset.id);
+                let temp = image[count]; // 0 1 2 3
+                temp.style.display = 'block';
+
+                for (let i = 0; i < image.length; i++) {
+                    image.forEach(element => {
+                        element.style.display = 'none';
+                    });
+
+                    if (target.dataset.id) {
+                        image[count].style.display = 'block';
+                        buttonNav[count].style.backgroundColor = 'transparent';
+                        count = target.dataset.id;
+                    }
+                    buttonNav[count].style.backgroundColor = 'white';
+                }
+                
+            });
+        });
+    </script>
+</body>
+</html>
