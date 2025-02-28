@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box__photo {
+            display: grid;
+            grid-template-columns: repeat(2, 400px);
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .image {
+            width: 400px;
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box__photo"></div>
+    <script>
+        let page = 1;
+        async function fetchPhotos() {
+            try {
+                const response = await fetch(`https://api.unsplash.com/photos/?client_id=ybtKQzWhQkT6XISQYOImIRD7YgdCFNzdSRk0UjItq9Q`)
+                const photos = await response.json();
+                return photos;
+            } catch (error) {
+                console.log(error);
+                return [];
+            }
+        }
+
+        async function getPhotos() {
+            const photos = await fetchPhotos();
+            const boxPhotos = document.querySelector('.box__photo');
+            photos.forEach(photo => {
+                const imgEl = document.createElement('img');
+                imgEl.classList.add('image');
+                imgEl.src = photo.urls.small;
+                boxPhotos.append(imgEl);
+            });
+            page++;
+        }
+        
+        getPhotos();
+
+        document.addEventListener('scroll', function (e) {
+            const scrollY = 2000;
+            console.log(`${document.documentElement.scrollTop} === ${scrollY}`);
+            if (document.documentElement.scrollTop >= scrollY) {
+                getPhotos();
+            }
+        });
+    </script>
+</body>
+</html>

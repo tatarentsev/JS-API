@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            margin-left: 5px;
+        }
+
+        form {
+            display: grid;
+            gap: 1rem;
+            justify-items: start;
+        }
+
+        .items {
+            display: grid;
+            gap: 1em;
+        }
+    </style>
+</head>
+<body>
+    <form name="chooseCategoryForm" action="#">
+        <h1>Выберите категорию товаров:</h1>
+        <select name="categoryItems">
+            <option value="">Выберите категорию</option>
+            <option value="electronic">Электроника</option>
+            <option value="cars">Машины</option>
+            <option value="fruites">Фрукты</option>
+        </select>
+        <h1>Товары:</h1>
+        <ul class="items">
+            
+        </ul>
+    </form>
+
+    <script> 
+        const chooseCategoryForm = document.forms.chooseCategoryForm;
+        const chooseCategorySelect = document.forms.chooseCategoryForm.categoryItems;
+        const items = document.querySelector('.items');
+
+        chooseCategorySelect.onchange = function () {
+            let categoryItems;
+            switch (chooseCategorySelect.value) {
+                
+                case 'electronic':
+                    items.innerHTML = '';
+                    categoryItems = ['Компьютер', 'Клавиатура', 'Монитор'];
+                    createNewElement(categoryItems);
+                    break;
+
+                case 'cars':
+                    items.innerHTML = '';
+                    categoryItems = ['BMW', 'Mercedes', 'Audi']; 
+                    createNewElement(categoryItems);
+                    break;
+                
+                case 'fruites':
+                    items.innerHTML = '';
+                    categoryItems = ['Банан', 'Груша', 'Мангустин']
+                    createNewElement(categoryItems);
+                    break;
+
+                default:
+                    break;
+            }
+
+            function createNewElement (arr) {
+                arr.forEach(element => {
+                    let tempItem = document.createElement('li');
+                    tempItem.textContent = element;
+                    tempItem.style.fontSize = '1rem';
+                    items.append(tempItem);
+                });
+            }
+        }     
+    </script>
+</body>
+</html>
